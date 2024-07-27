@@ -8,6 +8,7 @@ import { useVehicleControls} from "./utils/useVehicleControls";
 import { useFrame } from "@react-three/fiber";
 import useFollowCam from "./utils/useFollowCam";
 import { Vector3 } from "three";
+import { CarBody } from "./components/CarBody";
 
 const Car = () => {
     const { pivot } = useFollowCam();
@@ -76,6 +77,7 @@ const Car = () => {
     return(
         <group ref={vehicle}>
             <group ref={chassisBody}>
+                <CarBody />
                 <DummyCarBody width={chassisBodyValue.width} height={chassisBodyValue.height} front={chassisBodyValue.front * 2}/>
             </group>
             <DummyWheel wheelRef={wheels[0]} radius={wheelRadius}/>
