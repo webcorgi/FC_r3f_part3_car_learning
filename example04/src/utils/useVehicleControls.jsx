@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
+import { useRecoilValue } from "recoil";
+import { stage1 } from "./atom";
 
 export const useVehicleControls = (vehicleApi, chassisApi) => {
+    const motionStage = useRecoilValue(stage1)
     const [controls, setControls] = useState({});
 
     useEffect(()=>{
         const KeDownPressHandler = (e) => {
-            setControls((controls) => ({ 
-                ...controls, [e.key]: true 
+            setControls((controls) => ({
+                ...controls, [e.key]: true
             }));
             console.log('Down',e)
         }
         const KeUpPressHandler = (e) => {
-            setControls((controls) => ({ 
+            setControls((controls) => ({
                 ...controls, [e.key]: false,
             }));
             console.log('Up',e)
@@ -43,19 +46,33 @@ export const useVehicleControls = (vehicleApi, chassisApi) => {
             vehicleApi.setSteeringValue(-0.1, 1);
             vehicleApi.setSteeringValue(0.35, 2);
             vehicleApi.setSteeringValue(0.35, 3);
-           
         } else if (controls.ArrowRight) {
             vehicleApi.setSteeringValue(0.1, 0);
             vehicleApi.setSteeringValue(0.1, 1);
             vehicleApi.setSteeringValue(-0.35, 2);
             vehicleApi.setSteeringValue(-0.35, 3);
         } else {
-          for (let i = 0; i < 4; i++) {
-            vehicleApi.setSteeringValue(0, i);
-          }
+            for (let i = 0; i < 4; i++) {
+                vehicleApi.setSteeringValue(0, i);
+            }
         }
 
     }, [controls, vehicleApi, chassisApi]);
+
+    const onHandleHistory= () => {
+        const url ='https://github.com/webcorgi'
+        window.open(url, '_blank')
+    }
+
+    useEffect(() => {
+        if(controls.Enter && motionStage){
+            onHandleHistory()
+            setControls((controls)=> ({
+                ...controls,
+                Enter:false
+            }))
+        }
+    }, [controls, motionStage]);
 
     return controls;
 }

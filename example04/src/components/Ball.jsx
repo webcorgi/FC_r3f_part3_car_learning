@@ -6,14 +6,14 @@ useGLTF.preload('/assets/models/ball.glb')
 
 export function Ball(props) {
   const { nodes, materials } = useGLTF('/assets/models/ball.glb')
-  
+
   const [ref] = useSphere(()=> ({
     args: [0.15],
     mass: 1,
     type : "Dynamic",
     ...props
-}))
-  
+  }))
+
   return (
     <group ref={ref}>
       <group scale={0.15} position={[0,-0.153,-0.004]}>
