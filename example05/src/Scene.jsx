@@ -5,6 +5,7 @@ import Car from "./Car";
 import { useRecoilValue } from "recoil";
 import { useEffect } from "react";
 import { isStartScene } from "./utils/atom";
+import { Stats, StatsGl } from "@react-three/drei";
 
 function Scene() {
   const isStart = useRecoilValue(isStartScene)
@@ -20,6 +21,14 @@ function Scene() {
             <Ground />
           </Debug>
         </Physics>
+        
+        {/* <Stats showPanel={0} /> */}
+        {/*
+          0: FPS
+          1: MS
+          2: MB
+        */}
+        <StatsGl className="work" />
       </Canvas>
     </>
   );
